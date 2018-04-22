@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.zzh.androidbestpractice.db.City;
 import com.example.zzh.androidbestpractice.db.County;
 import com.example.zzh.androidbestpractice.db.Province;
+import com.example.zzh.androidbestpractice.gson.Weather;
 import com.example.zzh.androidbestpractice.util.HttpUtil;
 
 import org.litepal.crud.DataSupport;
@@ -94,10 +95,17 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 }else if(currentLevel == LEVEL_COUNTY){
                     String weatherId = countyList.get(position).getWeatherid();
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id", weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
+                    if(getActivity() instanceof MainActivity){
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id", weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if(getActivity() instanceof WeatherActivity){  //instanceof 用于判断是否是某个类的实例
+                        WeatherActivity activity = (WeatherActivity)getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefreshLayout.setRefreshing(true);
+                        activity.requestWeather(weatherId);
+                    }
                 }
             }
         });
