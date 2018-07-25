@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,11 @@ import com.example.zzh.androidbestpractice.gson.Forecast;
 import com.example.zzh.androidbestpractice.gson.Weather;
 import com.example.zzh.androidbestpractice.util.HttpUtil;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -66,13 +71,15 @@ public class WeatherActivity extends AppCompatActivity {
 
     private Button navbutton;
 
+    private TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.hide();
+        textView = (TextView)findViewById(R.id.text);
 
         if(Build.VERSION.SDK_INT>=21){
             View dectorView = getWindow().getDecorView();
@@ -164,6 +171,22 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.putString("weather", responseText);
                             editor.apply();
                             mWeatherId = weather.basic.weatherId;
+
+                            try{
+
+                                FileOutputStream out = openFileOutput("dataa", MODE_PRIVATE);
+                                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+                                writer.write(responseText);
+
+                                if(writer != null){
+                                    Toast.makeText(WeatherActivity.this, responseText, Toast.LENGTH_LONG).show();
+                                }else {
+                                    Toast.makeText(WeatherActivity.this, "ERROR", Toast.LENGTH_LONG).show();
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
                             showWeather(weather);
                         }else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();

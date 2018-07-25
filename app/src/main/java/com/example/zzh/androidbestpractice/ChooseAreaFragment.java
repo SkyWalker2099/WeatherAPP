@@ -46,6 +46,8 @@ public class ChooseAreaFragment extends Fragment {
     private TextView titleView ;
     private Button backButton;
 
+    private Button mapButton;
+
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private List<String> datalist = new ArrayList<>();
@@ -68,11 +70,20 @@ public class ChooseAreaFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.choose_area, container, false);
         titleView = (TextView)view.findViewById(R.id.title_text);
-        backButton = (Button)view.findViewById(R.id.back_button);
+        backButton= (Button)view.findViewById(R.id.back_button);
+        mapButton = (Button)view.findViewById(R.id.map_button);
         listView = (ListView)view.findViewById(R.id.list_view);
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WeatherMap.class);
+                startActivity(intent);
+            }
+        });
 
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, datalist);
         listView.setAdapter(adapter);
@@ -109,6 +120,7 @@ public class ChooseAreaFragment extends Fragment {
                 }
             }
         });
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
