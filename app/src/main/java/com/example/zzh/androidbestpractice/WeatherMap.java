@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.ZoomButtonsController;
 
 import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
@@ -19,6 +20,8 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.example.zzh.androidbestpractice.db.City;
+import com.example.zzh.androidbestpractice.db.County;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,4 +41,14 @@ public class WeatherMap extends AppCompatActivity {
         mapView = (MapView)findViewById(R.id.weather_map);
         baiduMap = mapView.getMap();
     }
+
+    protected void showCitiesWeather(List<City> cities){
+
+    }
+
+    protected void showCountiesWeather(List<County> counties){
+
+    }
+
+
 }

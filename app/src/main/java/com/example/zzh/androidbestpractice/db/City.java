@@ -13,7 +13,15 @@ public class City extends DataSupport {
     private  String cityName;
     private int cityCode;
     private int provinceid;
+    private String weatherid;
 
+    public String getWeatherid() {
+        return weatherid;
+    }
+
+    public void setWeatherid(String weatherid) {
+        this.weatherid = weatherid;
+    }
 
     public int getId() {
         return id;

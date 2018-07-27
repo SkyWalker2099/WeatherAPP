@@ -14,12 +14,20 @@ public class Basic  {
     @SerializedName("id")
     public String weatherId;
 
+    @SerializedName("lat")
+    public double latitude;
+
+    @SerializedName("lon")
+    public double longitude;
+
     public Update update;
 
     public class Update{
 
         @SerializedName("loc")
         public String updateTime;
+
+
 
     }
 

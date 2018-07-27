@@ -1,7 +1,11 @@
 package com.example.zzh.androidbestpractice.util;
 
+import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.zzh.androidbestpractice.R;
 import com.example.zzh.androidbestpractice.db.City;
 import com.example.zzh.androidbestpractice.db.County;
 import com.example.zzh.androidbestpractice.db.Province;
@@ -88,7 +92,6 @@ public class HttpUtil {
     }
 
     public static Weather handleWeatherResponse(String response){
-
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
@@ -98,6 +101,10 @@ public class HttpUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void saveResponse(String responses){
+
     }
 
 }

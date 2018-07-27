@@ -28,7 +28,9 @@ import com.example.zzh.androidbestpractice.gson.Weather;
 import com.example.zzh.androidbestpractice.util.HttpUtil;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -155,6 +157,7 @@ public class WeatherActivity extends AppCompatActivity {
                     public void run() {
                         Toast.makeText(WeatherActivity.this, "获取天气失败",Toast.LENGTH_LONG).show();
                         swipeRefreshLayout.setRefreshing(false); //刷新结束，隐藏刷新进度条
+                        drawerLayout.openDrawer(GravityCompat.START);
                     }
                 });
             }
@@ -174,15 +177,17 @@ public class WeatherActivity extends AppCompatActivity {
 
                             try{
 
-                                FileOutputStream out = openFileOutput("dataa", MODE_PRIVATE);
-                                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
-                                writer.write(responseText);
-
-                                if(writer != null){
-                                    Toast.makeText(WeatherActivity.this, responseText, Toast.LENGTH_LONG).show();
-                                }else {
-                                    Toast.makeText(WeatherActivity.this, "ERROR", Toast.LENGTH_LONG).show();
+                                 String filePath = "/data/data/com.example.zzh.androidbestpractice/json/weather.json";
+                                File file = new File(filePath);
+                                if(!file.exists()){
+                                    File dir = new File(file.getParent());
+                                    dir.mkdir();
+                                    file.createNewFile();
                                 }
+                                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                                fileOutputStream.write(responseText.getBytes());
+                                fileOutputStream.close();
+
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
@@ -190,6 +195,7 @@ public class WeatherActivity extends AppCompatActivity {
                             showWeather(weather);
                         }else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
+                            drawerLayout.openDrawer(GravityCompat.START);
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     }
