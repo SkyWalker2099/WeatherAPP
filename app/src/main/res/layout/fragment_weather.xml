@@ -1,0 +1,60 @@
+<FrameLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text"/>
+
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/bing_pic_img"-->
+        <!--android:scaleType="centerCrop"/>-->
+    <!--长宽都设为match_parent，默认ScallView将其会覆盖住-->
+
+
+
+
+
+            <ScrollView android:id="@+id/weather_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:overScrollMode="never"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:fitsSystemWindows="true">
+
+
+                    <!--<include layout="@layout/title"/>-->
+                    <include layout="@layout/now"/>
+                    <include layout="@layout/forecast"/>
+                    <include layout="@layout/aqi"/>
+                    <include layout="@layout/suggestion"/>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+
+
+        <!--<fragment-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/choose_area_fragment"-->
+            <!--android:name="com.example.zzh.androidbestpractice.ChooseAreaFragment"-->
+            <!--android:layout_gravity = "start"-->
+            <!--/>-->
+
+
+
+
+
+
+</FrameLayout>
