@@ -2,13 +2,15 @@ package com.example.zzh.androidbestpractice.gson;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.List;
 
 /**
  * Created by Zzh on 2018/4/18.
  */
 
-public class Weather {
+public class Weather{
 
     public String status;
 
@@ -22,5 +24,8 @@ public class Weather {
 
     @SerializedName("daily_forecast")
     public List<Forecast> forecastsList;
+
+
+
 
 }

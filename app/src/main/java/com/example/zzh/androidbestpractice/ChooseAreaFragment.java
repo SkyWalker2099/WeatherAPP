@@ -2,8 +2,11 @@ package com.example.zzh.androidbestpractice;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +49,7 @@ public class ChooseAreaFragment extends Fragment {
     private TextView titleView ;
     private Button backButton;
 
-    private Button mapButton;
+
 
     private ListView listView;
     private ArrayAdapter<String> adapter;
@@ -74,16 +77,9 @@ public class ChooseAreaFragment extends Fragment {
        View view = inflater.inflate(R.layout.choose_area, container, false);
         titleView = (TextView)view.findViewById(R.id.title_text);
         backButton= (Button)view.findViewById(R.id.back_button);
-        mapButton = (Button)view.findViewById(R.id.map_button);
+
         listView = (ListView)view.findViewById(R.id.list_view);
 
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WeatherMap.class);
-                startActivity(intent);
-            }
-        });
 
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, datalist);
         listView.setAdapter(adapter);
@@ -111,18 +107,46 @@ public class ChooseAreaFragment extends Fragment {
                     selectedCity = cityList.get(position);
                     queryCounties();
                 }else if(currentLevel == LEVEL_COUNTY){
-                    String weatherId = countyList.get(position).getWeatherid();
-                    if(getActivity() instanceof MainActivity){
-                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                        intent.putExtra("weather_id", weatherId);
-                        startActivity(intent);
-                        getActivity().finish();
-                    }else if(getActivity() instanceof WeatherActivity){  //instanceof 用于判断是否是某个类的实例
-                        WeatherActivity activity = (WeatherActivity)getActivity();
-                        activity.drawerLayout.closeDrawers();
-                        activity.swipeRefreshLayout.setRefreshing(true);
-                        activity.requestWeather(weatherId);
+                    if(Trans.isNetworkConnected(getActivity())!= false){
+                        String weatherId = countyList.get(position).getWeatherid();
+                        if(getActivity() instanceof MainActivity){
+                            Intent intent = new Intent(getActivity(), TabActivity.class);
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("weatherids", weatherId);
+                            editor.apply();
+                            startActivity(intent);
+                        }else if(getActivity() instanceof WeatherActivity){  //instanceof 用于判断是否是某个类的实例
+                            WeatherActivity activity = (WeatherActivity)getActivity();
+                            activity.drawerLayout.closeDrawers();
+                            activity.swipeRefreshLayout.setRefreshing(true);
+                            activity.requestWeather(weatherId);
+                        }else if(getActivity() instanceof TabActivity) {
+                            TabActivity activity = (TabActivity)getActivity();
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                            List<String> weatherids = Trans.str_to_list(preferences.getString("weatherids", null));
+                            boolean a = false;
+                            for(String weatherid: weatherids){
+                                if (weatherid.equals(weatherId))
+                                    a = true;
+                            }
+                            if(!a){
+                                weatherids.add(weatherId);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("weatherids", Trans.list_to_string(weatherids));
+                                editor.apply();
+                            }else {
+                                Toast.makeText(getContext(), "该城市已有", Toast.LENGTH_SHORT).show();
+                            }
+//
+                            activity.drawerLayout.closeDrawers();
+                            activity.swipeRefreshLayout.setRefreshing(true);
+                            activity.requestWeather();
+                        }
+                    }else {
+                        Toast.makeText(getActivity(),"网络出错", Toast.LENGTH_SHORT).show();
                     }
+
                 }
             }
         });

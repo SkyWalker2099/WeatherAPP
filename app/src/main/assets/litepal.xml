@@ -9,7 +9,7 @@
         <mapping class = "com.example.zzh.androidbestpractice.db.Province"/>
         <mapping class = "com.example.zzh.androidbestpractice.db.City"/>
         <mapping class = "com.example.zzh.androidbestpractice.db.County"/>
-
+        <mapping class = "com.example.zzh.androidbestpractice.gson.Weather"/>
 
     </list>
 

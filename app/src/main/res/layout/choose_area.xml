@@ -28,16 +28,7 @@
             android:layout_marginStart="22dp"
             android:background="@drawable/ic_back" />
 
-        <Button
-            android:id="@+id/map_button"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginStart="18dp"
-            android:background="@drawable/ic_home"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/back_button"
-            android:layout_toEndOf="@+id/back_button" />
+
 
     </RelativeLayout>
 

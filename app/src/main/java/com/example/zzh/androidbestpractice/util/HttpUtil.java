@@ -92,6 +92,7 @@ public class HttpUtil {
     }
 
     public static Weather handleWeatherResponse(String response){
+//        Log.d("", response);
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");

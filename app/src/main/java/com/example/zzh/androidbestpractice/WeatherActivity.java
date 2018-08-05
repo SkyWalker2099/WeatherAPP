@@ -91,7 +91,7 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
         weatherLayout = (ScrollView) findViewById(R.id.weather_layout);
         titleCity = (TextView) findViewById(R.id.title_city);
-        titleUpdateTime = (TextView) findViewById(R.id.update_title_time);
+//        titleUpdateTime = (TextView) findViewById(R.id.update_title_time);
         degreeText = (TextView) findViewById(R.id.dgree_text);
         weatherInfoView = (TextView) findViewById(R.id.weather_info_text);
         forecastLayout = (LinearLayout) findViewById(R.id.forecast_layout);
@@ -147,7 +147,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     public void requestWeather(final String weatherId){
 
-        String weatherUrl = "http://guolin.tech/api/weather?cityid="+weatherId + "&key=06b5bf5736c24261a0313b0f49bd4fab";
+        String weatherUrl = "http://guolin.tech/api/weather?cityid="+weatherId + "&key=aa142355116c47d1b73d52bdf1befd9a";
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

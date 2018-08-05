@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -20,6 +21,7 @@ import com.example.zzh.androidbestpractice.util.HttpUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.litepal.LitePal;
 import org.litepal.crud.DataSupport;
 import org.litepal.tablemanager.Connector;
 
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     android.app.Fragment fragment = (android.app.Fragment)getFragmentManager().findFragmentById(R.id.choose_area_fragment);
 
+    private String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 //
 //        }
 //        Toast.makeText(getApplicationContext(), "加载地图22", Toast.LENGTH_SHORT).show();
+
+
 
         File file =  new File("/data/data/" + getApplicationContext().getPackageName() + "/databases");
         if(file != null && file.exists()&& file.isDirectory()){
@@ -70,15 +76,20 @@ public class MainActivity extends AppCompatActivity {
 //        Toast.makeText(getApplicationContext(), "加载地图33", Toast.LENGTH_SHORT).show();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if(preferences.getString("weather", null)!=null){
-            Intent intent = new Intent(this, WeatherActivity.class);
+        if(preferences.getString("weatherids", null)!=null&& preferences.getString("weatherids",null) != ""){
+            Log.d(TAG, "onCreate: "+ preferences.getString("weatherids",null));
+            Intent intent = new Intent(this, TabActivity.class);
             startActivity(intent);
             finish();
         }
+
+
     }
 
 
     public void importdatabase(){
+
+
         String dirPath = "/data/data/com.example.zzh.androidbestpractice/databases";
         File dir = new File(dirPath);
         if(!dir.exists()){
